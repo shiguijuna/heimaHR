@@ -38,7 +38,24 @@ export default {
   components: {
     employeesSet
   },
-  props: ['monthOfReport', 'formData', 'attendInfo', 'yearMonth'],
+  props: {
+    monthOfReport: {
+      type: [String, Number],
+      default: ''
+    },
+    formData: {
+      type: Object,
+      default: () => ({})
+    },
+    attendInfo: {
+      type: Object,
+      default: () => ({})
+    },
+    yearMonth: {
+      type: [String, Number],
+      default: ''
+    }
+  },
   data() {
     return {
       employeesSet: 'employeesSet',

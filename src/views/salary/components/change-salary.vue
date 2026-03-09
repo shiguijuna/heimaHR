@@ -62,7 +62,16 @@ import { changeSalary } from '@/api/salary'
 
 export default {
   name: 'UsersTableIndex',
-  props: ['userSalary', 'userId'],
+  props: {
+    userSalary: {
+      type: Object,
+      default: () => ({})
+    },
+    userId: {
+      type: [String, Number],
+      required: true
+    }
+  },
 
   data() {
     return {
@@ -102,7 +111,7 @@ export default {
     this.getUserDetailById()
   },
   methods: {
-    async  onSubmit() {
+    async onSubmit() {
       const sendData = this.ruleForm
       sendData.userId = this.userId
       await changeSalary(sendData)

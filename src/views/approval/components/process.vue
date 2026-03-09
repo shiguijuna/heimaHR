@@ -5,10 +5,10 @@
         <el-form-item label="应用：" prop="processType">
           <el-select v-model="formData.processType" class="filter-item" filterable>
             <el-option
-              v-for="item in baseData.approvalType"
-              :key="item.id"
-              :label="item.value"
-              :value="item.id"
+              v-for="typeItem in approvalTypes"
+              :key="typeItem.id"
+              :label="typeItem.value"
+              :value="typeItem.id"
             />
           </el-select>
         </el-form-item>
@@ -32,10 +32,10 @@
             <el-form-item label="执行人：" prop="formOfEmployment">
               <el-select v-model="item.user" class="filter-item" multiple style="width:300px;">
                 <el-option
-                  v-for="item in getEmploySimpleData"
-                  :key="item.id"
-                  :label="item.fullName"
-                  :value="item.id"
+                  v-for="userItem in employeeOptions"
+                  :key="userItem.id"
+                  :label="userItem.fullName"
+                  :value="userItem.id"
                 />
               </el-select>
             </el-form-item>
@@ -53,22 +53,33 @@
 
 <script>
 import { getSimpleListApi } from '@/api/department'
-import { process } from '@/api/approvals'
-import commonApi from '@/api/constant/approvals'
+import { process } from '@/api/approval'
+
+const APPROVAL_TYPES = [
+  { id: 'process_leave', value: '请假' },
+  { id: 'process_overtime', value: '加班' },
+  { id: 'process_dimission', value: '离职' }
+]
+
 export default {
   name: 'Setting',
-  props: ['setData'],
+  props: {
+    setData: {
+      type: Function,
+      default: null
+    }
+  },
   data() {
     return {
       dialogFormVisible: false,
       activeName: 'first',
-      Data: [],
+      employeeOptions: [],
       formData: {
         processType: '',
         points: []
       },
       tempList: [],
-      baseData: commonApi
+      approvalTypes: APPROVAL_TYPES
     }
   },
   // 创建完毕状态
@@ -78,7 +89,7 @@ export default {
   methods: {
     // 业务方法
     async getEmploySimple() {
-      this.Data = await getSimpleListApi() // gaolyQQ需要提供该方法
+      this.employeeOptions = await getSimpleListApi()
     },
     // 弹层显示
     dialogFormV() {
@@ -91,14 +102,13 @@ export default {
     // 界面交互
     // 表单提交
     saveBtn() {
-      for (var i = 0; i < this.tempList.length; i++) {
-        var userData = this.tempList[i].user.join(',')
-        var data = {
-          name: this.tempList[i].name,
-          users: userData
-        }
-        this.formData.points.push(data)
-      }
+      this.formData.points = this.tempList
+        .filter(item => item.name && Array.isArray(item.user) && item.user.length > 0)
+        .map(item => ({
+          name: item.name,
+          users: item.user.join(',')
+        }))
+
       process(this.formData)
         .then(() => {
           this.$message.success('流程添加成功！')
@@ -114,6 +124,7 @@ export default {
         this.tempList = this.tempList || []
         this.tempList.push({
           name: '',
+          user: [],
           key: Date.now()
         })
       } else {
