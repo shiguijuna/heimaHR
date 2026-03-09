@@ -30,7 +30,7 @@ export default {
     return {
       form: {
         mobile: process.env.NODE_ENV === 'development' ? '13800000002' : '', // 手机号
-        password: process.env.NODE_ENV === 'development' ? 'hm#qd@23!' : '', // 密码
+        password: process.env.NODE_ENV === 'development' ? 'itHeiMa@' + new Date().toISOString().slice(0, 10).replace(/-/g, '') : '', // 密码
         isArgee: process.env.NODE_ENV === 'development'// 是否选中协议
       },
       rules: {
