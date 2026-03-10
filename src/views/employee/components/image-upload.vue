@@ -52,13 +52,13 @@ export default {
       // 上传头像
       // 准备cos链接对象
       const cos = new COS({
-        SecretId: process.env.VUE_APP_COS_SECRET_ID, // 从环境变量读取
-        SecretKey: process.env.VUE_APP_COS_SECRET_KEY // 从环境变量读取
+        SecretId: process.env.VUE_APP_COS_SECRET_ID,
+        SecretKey: process.env.VUE_APP_COS_SECRET_KEY
       })
       // 开始上传头像
       cos.uploadFile({
-        Bucket: 'zzhmhr-1320089674', /* 存储桶的名字*/
-        Region: 'ap-nanjing', /* 存储桶所在地域，必须字段 */
+        Bucket: 'renliziyuan-1257863609', /* 存储桶的名字*/
+        Region: 'ap-guangzhou', /* 存储桶所在地域，必须字段 */
         Key: val.file.name, /* 上传后图片显示的名字*/
         Body: val.file, // 上传文件对象
         SliceSize: 1024 * 1024 * 5 /* 触发分块上传的阈值，超过5MB 使用分块上传，小于5MB使用简单上传。可自行设置，非必须 */

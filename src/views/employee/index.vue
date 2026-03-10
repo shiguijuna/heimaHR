@@ -116,7 +116,7 @@
     <!-- 显示角色的弹窗 -->
     <el-dialog title="分配角色" :visible.sync="isShowRole">
       <el-checkbox-group v-model="roleIds">
-        <el-checkbox v-for="item in RoleList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
+        <el-checkbox v-for="item in RoleList" :key="item.id" style="display: block;" :label="item.id">{{ item.name }}</el-checkbox>
       </el-checkbox-group>
       <div slot="footer" class="dialog-footer">
         <el-button size="mini" type="primary" @click="submitRole">确 定</el-button>
@@ -285,6 +285,7 @@ export default {
       display:inline-block;
     }
   }
+
 }
 
 </style>
