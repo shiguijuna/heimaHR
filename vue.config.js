@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -60,8 +61,22 @@ module.exports = {
       'vue': 'Vue',
       'element-ui': 'ELEMENT',
       'cos-js-sdk-v5': 'COS',
-      'lodash': '_'
-    }
+      'lodash': '_',
+      'echarts': 'echarts',
+      'echarts/core': 'echarts',
+      'echarts/charts': 'echarts',
+      'echarts/components': 'echarts',
+      'echarts/renderers': 'echarts',
+      'file-saver': 'saveAs',
+      'vue-count-to': 'CountTo'
+    },
+    plugins: [
+      new CompressionPlugin({
+        test: /\.(js|css)$/,
+        threshold: 10240,
+        minRatio: 0.8
+      })
+    ]
   },
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload

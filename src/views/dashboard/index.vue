@@ -256,17 +256,8 @@
   </div></template>
 
 <script>
-// 导入echarts  yarn add echarts@5.4.3
-// import * as echarts from 'echarts'
-import * as echarts from 'echarts/core' // 引入核心包
-import { LineChart } from 'echarts/charts' // 引入折线图
-import { GridComponent } from 'echarts/components' // 引入组件
-import { CanvasRenderer } from 'echarts/renderers'
-echarts.use([
-  LineChart,
-  GridComponent,
-  CanvasRenderer
-])
+// echarts 已通过 CDN 引入，直接使用全局变量
+import * as echarts from 'echarts'
 import CountTo from 'vue-count-to'
 import { mapGetters } from 'vuex'
 import { getHomeDataApi, getMessageListApi } from '@/api/home'
